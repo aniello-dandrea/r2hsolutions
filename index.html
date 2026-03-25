@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="R2H Solutions – Consulenza specializzata in Pubblica Amministrazione e Fondi Europei per l'Agricoltura. Aniello D'Andrea, esperto in PSR, FEAGA e FEASR." />
+  <title>R2H Solutions | Aniello D'Andrea – PA & Fondi Europei Agricoltura</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            border: 'hsl(214.3 31.8% 91.4%)',
+            input:  'hsl(214.3 31.8% 91.4%)',
+            ring:   'hsl(215 20.2% 65.1%)',
+            background: 'hsl(0 0% 100%)',
+            foreground: 'hsl(222.2 84% 4.9%)',
+            primary:   { DEFAULT: 'hsl(221.2 83.2% 53.3%)', foreground: 'hsl(210 40% 98%)' },
+            secondary: { DEFAULT: 'hsl(210 40% 96.1%)',      foreground: 'hsl(222.2 47.4% 11.2%)' },
+            muted:     { DEFAULT: 'hsl(210 40% 96.1%)',      foreground: 'hsl(215.4 16.3% 46.9%)' },
+            accent:    { DEFAULT: 'hsl(210 40% 96.1%)',      foreground: 'hsl(222.2 47.4% 11.2%)' },
+          },
+          borderRadius: { lg: '0.5rem', md: '0.375rem', sm: '0.25rem' },
+          animation: {
+            'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+            'pulse-slow':  'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%':   { opacity: '0', transform: 'translateY(24px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ── shadcn-flavored global base ── */
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #60a5fa 0%, #2563eb 50%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-bg {
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, #1e3a5f 0%, #0f172a 60%);
+    }
+
+    /* shadcn card */
+    .card {
+      border: 1px solid hsl(214.3 31.8% 91.4%);
+      border-radius: 0.75rem;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,.05), 0 1px 2px rgba(0,0,0,.04);
+      transition: box-shadow .2s ease, transform .2s ease;
+    }
+    .card:hover { box-shadow: 0 8px 30px rgba(0,0,0,.10); transform: translateY(-3px); }
+
+    /* shadcn badge */
+    .badge {
+      display: inline-flex; align-items: center; gap: .375rem;
+      border-radius: 9999px; padding: .25rem .75rem;
+      font-size: .75rem; font-weight: 500; line-height: 1;
+    }
+    .badge-blue  { background: rgba(59,130,246,.12); color: #2563eb; border: 1px solid rgba(59,130,246,.25); }
+    .badge-green { background: rgba(34,197,94,.10);  color: #16a34a; border: 1px solid rgba(34,197,94,.25); }
+    .badge-amber { background: rgba(245,158,11,.10); color: #b45309; border: 1px solid rgba(245,158,11,.25); }
+    .badge-slate { background: rgba(100,116,139,.10); color: #475569; border: 1px solid rgba(100,116,139,.2); }
+
+    /* timeline */
+    .timeline-line { position: relative; padding-left: 2rem; }
+    .timeline-line::before {
+      content: '';
+      position: absolute; left: .625rem; top: .5rem; bottom: 0;
+      width: 2px; background: hsl(214.3 31.8% 91.4%);
+    }
+    .timeline-dot {
+      position: absolute; left: 0; top: .375rem;
+      width: 1.25rem; height: 1.25rem; border-radius: 50%;
+      border: 2px solid #2563eb; background: #fff;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .timeline-dot span { width: .5rem; height: .5rem; border-radius: 50%; background: #2563eb; }
+
+    /* nav scroll behaviour */
+    nav.scrolled { box-shadow: 0 1px 12px rgba(0,0,0,.08); }
+
+    /* mobile menu */
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: block; }
+  </style>
+</head>
+
+<body class="bg-white text-slate-900 antialiased">
+
+  <!-- ════════════════════════════════ NAV ════════════════════════════════ -->
+  <nav id="navbar" class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-slate-100 transition-shadow duration-300">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+
+      <!-- Logo -->
+      <a href="#top" class="flex items-center gap-1.5 select-none">
+        <span class="text-xl font-extrabold tracking-tight gradient-text">R2H</span>
+        <span class="text-slate-500 font-semibold text-sm">Solutions</span>
+      </a>
+
+      <!-- Desktop links -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#about"      class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Chi sono</a>
+        <a href="#experience" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Esperienza</a>
+        <a href="#services"   class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Servizi</a>
+        <a href="#contact"    class="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+          Contattami
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+      </div>
+
+      <!-- Hamburger -->
+      <button id="menu-btn" class="md:hidden p-2 rounded-md text-slate-500 hover:bg-slate-100" aria-label="Apri menu">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="border-t border-slate-100 bg-white/98 px-6 pb-4 md:hidden">
+      <div class="flex flex-col gap-3 pt-3">
+        <a href="#about"      class="py-2 text-sm font-medium text-slate-700">Chi sono</a>
+        <a href="#experience" class="py-2 text-sm font-medium text-slate-700">Esperienza</a>
+        <a href="#services"   class="py-2 text-sm font-medium text-slate-700">Servizi</a>
+        <a href="#contact"    class="mt-2 px-4 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-lg text-center">Contattami</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════ HERO ════════════════════════════════ -->
+  <section id="top" class="hero-bg min-h-screen flex items-center pt-16">
+    <div class="max-w-6xl mx-auto px-6 py-24 w-full">
+      <div class="max-w-3xl">
+
+        <!-- Status badge -->
+        <div class="badge badge-blue mb-6">
+          <span class="w-2 h-2 rounded-full bg-blue-500 inline-block" style="animation: pulse 2s infinite; box-shadow: 0 0 0 0 rgba(59,130,246,.6)"></span>
+          Disponibile per nuovi progetti
+        </div>
+
+        <!-- Heading -->
+        <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-[1.05] tracking-tight mb-6">
+          Aniello<br/>
+          <span class="gradient-text">D'Andrea</span>
+        </h1>
+
+        <!-- Sub -->
+        <p class="text-lg md:text-xl text-slate-300 mb-10 leading-relaxed max-w-2xl">
+          Consulente con oltre <strong class="text-white font-semibold">15 anni di esperienza</strong> nella
+          <strong class="text-white font-semibold">Pubblica Amministrazione</strong> e nella gestione dei
+          <strong class="text-white font-semibold">Fondi Europei per l'Agricoltura</strong>.
+          Expertise in PSR, FEAGA, FEASR e sistemi informativi regionali per il settore agricolo.
+        </p>
+
+        <!-- CTA buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 mb-16">
+          <a href="#contact"
+             class="px-8 py-4 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-500 transition-colors shadow-lg shadow-blue-700/30 text-center">
+            Collabora con me
+          </a>
+          <a href="#experience"
+             class="px-8 py-4 bg-white/10 text-white font-semibold rounded-xl hover:bg-white/15 transition-colors border border-white/20 text-center">
+            Scopri l'esperienza
+          </a>
+        </div>
+
+        <!-- Stats row -->
+        <div class="grid grid-cols-3 gap-6 max-w-sm">
+          <div class="text-center">
+            <p class="text-3xl font-extrabold text-white">15+</p>
+            <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Anni</p>
+          </div>
+          <div class="text-center border-x border-white/10">
+            <p class="text-3xl font-extrabold text-white">PA</p>
+            <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Pubbl. Admin.</p>
+          </div>
+          <div class="text-center">
+            <p class="text-3xl font-extrabold text-white">UE</p>
+            <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Fondi Europei</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- curved divider -->
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none" style="line-height:0">
+      <svg viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:60px">
+        <path d="M0,60 C400,0 800,0 1200,60 L1200,60 L0,60 Z" fill="#ffffff"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════ ABOUT ════════════════════════════════ -->
+  <section id="about" class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+
+        <!-- Text -->
+        <div>
+          <p class="text-xs font-semibold text-blue-600 uppercase tracking-[.15em] mb-3">Chi sono</p>
+          <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-5 leading-snug">
+            Dalla teoria<br/>alla pratica sui fondi UE
+          </h2>
+          <p class="text-slate-600 leading-relaxed mb-6">
+            Ho costruito la mia carriera all'interno della <span class="font-semibold text-slate-800">Pubblica Amministrazione</span>,
+            acquisendo una conoscenza approfondita delle procedure di gestione, controllo e rendicontazione
+            dei finanziamenti europei nel settore agricolo e dello sviluppo rurale.
+          </p>
+          <p class="text-slate-600 leading-relaxed mb-8">
+            Con R2H Solutions metto a disposizione di enti pubblici, imprese agricole e operatori del
+            settore agro-alimentare l'esperienza maturata in anni di lavoro sul campo: dalla progettazione
+            delle domande di aiuto fino alla chiusura dei controlli, con piena conoscenza dei regolamenti
+            FEAGA e FEASR e degli strumenti informatici dedicati (AGEA, SIARC, SIN).
+          </p>
+
+          <!-- Skill chips -->
+          <div class="flex flex-wrap gap-2">
+            <span class="badge badge-blue">PSR / PNSR</span>
+            <span class="badge badge-blue">FEAGA · FEASR</span>
+            <span class="badge badge-green">AGEA / ARTEA</span>
+            <span class="badge badge-green">Sviluppo Rurale</span>
+            <span class="badge badge-amber">Gestione Procedure</span>
+            <span class="badge badge-amber">Controlli in loco</span>
+            <span class="badge badge-slate">Normativa UE</span>
+            <span class="badge badge-slate">Digitalizzazione PA</span>
+          </div>
+        </div>
+
+        <!-- Feature cards -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="card p-5 col-span-2">
+            <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center mb-3">
+              <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z"/></svg>
+            </div>
+            <h3 class="font-semibold text-slate-800 mb-1">Esperienza pluriennale in PA</h3>
+            <p class="text-sm text-slate-500">Anni di lavoro diretto con enti regionali e organismi pagatori, con padronanza dei processi istituzionali.</p>
+          </div>
+          <div class="card p-5">
+            <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center mb-3">
+              <svg class="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"/></svg>
+            </div>
+            <h3 class="font-semibold text-slate-800 mb-1">Fondi UE Agricoltura</h3>
+            <p class="text-sm text-slate-500">Gestione misure PSR, istruttorie e rendicontazioni FEAGA/FEASR.</p>
+          </div>
+          <div class="card p-5">
+            <div class="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center mb-3">
+              <svg class="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+            </div>
+            <h3 class="font-semibold text-slate-800 mb-1">Controlli & Compliance</h3>
+            <p class="text-sm text-slate-500">Pianificazione e conduzione di controlli in loco secondo i regolamenti europei.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════ EXPERIENCE ═══════════════════════════ -->
+  <section id="experience" class="py-20 bg-slate-50">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <p class="text-xs font-semibold text-blue-600 uppercase tracking-[.15em] mb-3">Percorso Professionale</p>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900">Esperienza che fa la differenza</h2>
+        <p class="text-slate-500 mt-3 max-w-xl mx-auto">Oltre un decennio di opera concreta nella PA e nei programmi europei dedicati all'agricoltura.</p>
+      </div>
+
+      <div class="max-w-3xl mx-auto space-y-6">
+
+        <!-- ── ULTIMO RUOLO ── -->
+        <div class="card p-7 relative overflow-hidden">
+          <!-- accent bar -->
+          <div class="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl bg-blue-600"></div>
+          <div class="pl-2">
+            <div class="flex flex-wrap items-start justify-between gap-3 mb-4">
+              <div>
+                <span class="badge badge-blue mb-2">Ruolo attuale</span>
+                <h3 class="text-xl font-bold text-slate-900">Consulente Senior – Fondi Strutturali & PA</h3>
+                <p class="text-blue-600 font-medium text-sm mt-0.5">R2H Solutions · Roma / Campania</p>
+              </div>
+              <span class="badge badge-slate whitespace-nowrap">2022 – presente</span>
+            </div>
+            <p class="text-slate-600 leading-relaxed mb-5">
+              Attività di consulenza specialistica per enti pubblici e privati nell'ambito della progettazione,
+              gestione e rendicontazione di interventi finanziati con fondi strutturali europei,
+              con focus sui Piani di Sviluppo Rurale (PSR) e i regolamenti FEAGA/FEASR.
+              Supporto tecnico nella digitalizzazione dei processi amministrativi e nell'utilizzo dei
+              sistemi informativi dedicati (SIARC, SIN, portali AGEA).
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="badge badge-blue">PSR Campania</span>
+              <span class="badge badge-blue">FEAGA · FEASR</span>
+              <span class="badge badge-green">SIARC / SIN</span>
+              <span class="badge badge-green">Rendicontazione UE</span>
+              <span class="badge badge-amber">Due Diligence</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── ESPERIENZA PLURIENNALE PA + FONDI UE ── -->
+        <div class="card p-7 relative overflow-hidden">
+          <div class="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl bg-emerald-500"></div>
+          <div class="pl-2">
+            <div class="flex flex-wrap items-start justify-between gap-3 mb-4">
+              <div>
+                <span class="badge badge-green mb-2">Esperienza pluriennale</span>
+                <h3 class="text-xl font-bold text-slate-900">Pubblica Amministrazione & Fondi Europei per l'Agricoltura</h3>
+                <p class="text-emerald-700 font-medium text-sm mt-0.5">Enti Regionali / Organismi Pagatori · Campania</p>
+              </div>
+              <span class="badge badge-slate whitespace-nowrap">~2008 – 2022</span>
+            </div>
+            <p class="text-slate-600 leading-relaxed mb-5">
+              Lunga carriera all'interno della Pubblica Amministrazione con responsabilità crescenti nella
+              gestione dei fondi europei agricoli. Attività comprendenti: istruttoria delle domande di aiuto,
+              pianificazione e conduzione dei controlli in loco, redazione di verbali e relazioni tecniche,
+              coordinamento con gli organismi pagatori (AGEA/organismi delegati) e interlocuzione costante
+              con la Commissione Europea sui programmi di sviluppo rurale.
+            </p>
+
+            <!-- Timeline interna -->
+            <div class="space-y-4 mt-6 border-t border-slate-100 pt-5">
+              <div class="flex gap-4">
+                <div class="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-100 border-2 border-emerald-500 flex items-center justify-center mt-0.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-slate-800">Gestione misure PSR – programmazione 2014-2020 / 2023-2027</p>
+                  <p class="text-xs text-slate-500 mt-0.5">Istruttoria, concessione contributi, rendicontazione e chiusura misure agro-ambientali, investimenti aziendali, Leader.</p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-100 border-2 border-emerald-500 flex items-center justify-center mt-0.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-slate-800">Controlli FEAGA – pagamenti diretti PAC</p>
+                  <p class="text-xs text-slate-500 mt-0.5">Pianificazione campionamento, esecuzione controlli in loco (amm.vi e fisici), gestione esiti e recuperi.</p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-100 border-2 border-emerald-500 flex items-center justify-center mt-0.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-slate-800">Sistemi informativi regionali</p>
+                  <p class="text-xs text-slate-500 mt-0.5">Utilizzo e gestione di SIARC, SIN, portale AGEA e banche dati catastali per l'agricoltura.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mt-5">
+              <span class="badge badge-green">Misure PSR</span>
+              <span class="badge badge-green">Pagamenti Diretti PAC</span>
+              <span class="badge badge-blue">Controlli in loco</span>
+              <span class="badge badge-blue">Normativa UE Agric.</span>
+              <span class="badge badge-amber">AGEA</span>
+              <span class="badge badge-amber">Sviluppo Rurale</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════ SERVICES ════════════════════════════ -->
+  <section id="services" class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <p class="text-xs font-semibold text-blue-600 uppercase tracking-[.15em] mb-3">Cosa offro</p>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900">Servizi di consulenza</h2>
+        <p class="text-slate-500 mt-3 max-w-xl mx-auto">Supporto concreto in ogni fase del ciclo di vita dei fondi europei, con un approccio pratico e orientato ai risultati.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Card 1 -->
+        <div class="card p-6">
+          <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-slate-800 mb-2">Progettazione domande di aiuto</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Assistenza nella predisposizione e presentazione di domande di finanziamento PSR, misure agro-ambientali e investimenti aziendali.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card p-6">
+          <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-slate-800 mb-2">Gestione & Rendicontazione</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Supporto nella gestione operativa dei progetti finanziati, dalla fase di avvio fino alla rendicontazione finale e chiusura del contributo.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card p-6">
+          <div class="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-slate-800 mb-2">Audit & Controlli</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Preparazione e accompagnamento durante ispezioni e controlli da parte degli organismi pagatori (AGEA) e delle autorità di audit nazionali/europee.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card p-6">
+          <div class="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-slate-800 mb-2">Formazione & Training PA</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Sessioni formative e workshop dedicati a funzionari pubblici e operatori del settore sui regolamenti europei e sull'utilizzo dei sistemi informativi.</p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="card p-6">
+          <div class="w-12 h-12 rounded-xl bg-rose-50 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-slate-800 mb-2">Normativa & Compliance UE</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Analisi e interpretazione della normativa comunitaria in materia agricola (Reg. 1305/2013, 2021/2115, PAC 2023-2027) e adeguamento delle procedure.</p>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="card p-6">
+          <div class="w-12 h-12 rounded-xl bg-cyan-50 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-cyan-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 1-6.23-.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0 1 12 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-slate-800 mb-2">Digitalizzazione Processi PA</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Consulenza sull'implementazione e ottimizzazione dei sistemi informativi per la gestione dei fondi europei (SIARC, SIN, portali AGEA).</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════ CONTACT ═════════════════════════════ -->
+  <section id="contact" class="py-20 bg-slate-50">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-16 items-start">
+
+        <!-- Left: info -->
+        <div>
+          <p class="text-xs font-semibold text-blue-600 uppercase tracking-[.15em] mb-3">Contatti</p>
+          <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-5">Parliamo del tuo progetto</h2>
+          <p class="text-slate-600 leading-relaxed mb-8">
+            Che tu sia un ente pubblico, un'associazione di categoria o un'impresa agricola alla ricerca di
+            supporto nella gestione dei fondi europei, sono qui per aiutarti. Scrivimi o chiamami per
+            discutere le tue esigenze e trovare la soluzione più adatta.
+          </p>
+
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 font-medium uppercase tracking-wide">Email</p>
+                <a href="mailto:info@r2hsolutions.it" class="text-slate-800 font-semibold hover:text-blue-600 transition-colors">info@r2hsolutions.it</a>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253"/></svg>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 font-medium uppercase tracking-wide">Sito web</p>
+                <span class="text-slate-800 font-semibold">r2hsolutions.it</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: form -->
+        <div class="card p-8">
+          <h3 class="font-bold text-slate-800 mb-6 text-lg">Invia un messaggio</h3>
+          <form action="mailto:info@r2hsolutions.it" method="post" enctype="text/plain" class="space-y-5">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label for="nome" class="block text-sm font-medium text-slate-700 mb-1.5">Nome</label>
+                <input id="nome" name="nome" type="text" placeholder="Mario" required
+                  class="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+              </div>
+              <div>
+                <label for="cognome" class="block text-sm font-medium text-slate-700 mb-1.5">Cognome</label>
+                <input id="cognome" name="cognome" type="text" placeholder="Rossi" required
+                  class="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+              </div>
+            </div>
+
+            <div>
+              <label for="email" class="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
+              <input id="email" name="email" type="email" placeholder="mario.rossi@esempio.it" required
+                class="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+            </div>
+
+            <div>
+              <label for="oggetto" class="block text-sm font-medium text-slate-700 mb-1.5">Oggetto</label>
+              <input id="oggetto" name="oggetto" type="text" placeholder="Consulenza PSR / Audit fondi europei…"
+                class="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+            </div>
+
+            <div>
+              <label for="messaggio" class="block text-sm font-medium text-slate-700 mb-1.5">Messaggio</label>
+              <textarea id="messaggio" name="messaggio" rows="4" placeholder="Descrivi brevemente il tuo progetto o la tua esigenza…" required
+                class="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"></textarea>
+            </div>
+
+            <button type="submit"
+              class="w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center justify-center gap-2">
+              Invia messaggio
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"/></svg>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════ FOOTER ══════════════════════════════ -->
+  <footer class="bg-slate-900 text-slate-400 py-10">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="text-xl font-extrabold tracking-tight gradient-text">R2H</span>
+        <span class="text-slate-500 font-semibold text-sm">Solutions</span>
+      </div>
+      <p class="text-sm text-center">© 2026 R2H Solutions – Aniello D'Andrea. Tutti i diritti riservati.</p>
+      <a href="mailto:info@r2hsolutions.it" class="text-sm hover:text-white transition-colors">info@r2hsolutions.it</a>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════ JS ══════════════════════════════════ -->
+  <script>
+    // Mobile menu toggle
+    const btn  = document.getElementById('menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    btn.addEventListener('click', () => menu.classList.toggle('open'));
+
+    // Close mobile menu on link click
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+
+    // Navbar shadow on scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    // Smooth appear on sections (IntersectionObserver)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(16px)';
+      card.style.transition = 'opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease, transform 0.2s ease';
+      observer.observe(card);
+    });
+  </script>
+
+</body>
+</html>
