@@ -3,594 +3,1048 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="R2H Solutions – Consulenza specializzata in Pubblica Amministrazione e Fondi Europei per l'Agricoltura. Aniello D'Andrea, esperto in PSR, FEAGA e FEASR." />
-  <title>R2H Solutions | Aniello D'Andrea – PA & Fondi Europei Agricoltura</title>
+  <meta name="description" content="Aniello D'Andrea – Software Developer con oltre 15 anni di esperienza. Specializzato in sistemi informativi per la PA, fondi europei agricoltura, architetture open source e AI applicata ai processi istruttori." />
+  <title>Aniello D'Andrea | Software Developer – PA, Open Source &amp; AI</title>
 
-  <!-- Tailwind CSS CDN -->
+
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
-          colors: {
-            border: 'hsl(214.3 31.8% 91.4%)',
-            input:  'hsl(214.3 31.8% 91.4%)',
-            ring:   'hsl(215 20.2% 65.1%)',
-            background: 'hsl(0 0% 100%)',
-            foreground: 'hsl(222.2 84% 4.9%)',
-            primary:   { DEFAULT: 'hsl(221.2 83.2% 53.3%)', foreground: 'hsl(210 40% 98%)' },
-            secondary: { DEFAULT: 'hsl(210 40% 96.1%)',      foreground: 'hsl(222.2 47.4% 11.2%)' },
-            muted:     { DEFAULT: 'hsl(210 40% 96.1%)',      foreground: 'hsl(215.4 16.3% 46.9%)' },
-            accent:    { DEFAULT: 'hsl(210 40% 96.1%)',      foreground: 'hsl(222.2 47.4% 11.2%)' },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
           },
-          borderRadius: { lg: '0.5rem', md: '0.375rem', sm: '0.25rem' },
+          colors: {
+            teal: {
+              50:  '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4',
+              300: '#5eead4', 400: '#2dd4bf', 500: '#14b8a6',
+              600: '#0d9488', 700: '#0f766e', 800: '#115e59', 900: '#134e4a',
+            },
+          },
           animation: {
-            'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
-            'pulse-slow':  'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'fade-up': 'fadeUp 0.65s ease-out forwards',
+            'fade-in': 'fadeIn 0.5s ease-out forwards',
+            'float':   'float 6s ease-in-out infinite',
           },
           keyframes: {
-            fadeInUp: {
-              '0%':   { opacity: '0', transform: 'translateY(24px)' },
-              '100%': { opacity: '1', transform: 'translateY(0)' },
-            },
+            fadeUp:  { '0%': { opacity: '0', transform: 'translateY(28px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+            fadeIn:  { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+            float:   { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
           },
         },
       },
     };
+
+    // Prevent dark-mode flash
+    (function () {
+      const stored = localStorage.getItem('theme');
+      if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
   </script>
 
   <style>
-    /* ── shadcn-flavored global base ── */
-    * { box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
 
-    .gradient-text {
-      background: linear-gradient(135deg, #60a5fa 0%, #2563eb 50%, #06b6d4 100%);
+    /* Teal accent gradient text */
+    .accent-text {
+      background: linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #2dd4bf 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
+    /* Hero background */
     .hero-bg {
-      background: radial-gradient(ellipse 80% 60% at 50% -10%, #1e3a5f 0%, #0f172a 60%);
+      background:
+        radial-gradient(ellipse 90% 55% at 55% -5%, rgba(15,118,110,0.15) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 40% at 10% 60%, rgba(13,148,136,0.07) 0%, transparent 55%);
+    }
+    .dark .hero-bg {
+      background:
+        radial-gradient(ellipse 90% 55% at 55% -5%, rgba(13,148,136,0.22) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 40% at 10% 60%, rgba(15,118,110,0.12) 0%, transparent 55%);
     }
 
-    /* shadcn card */
+    /* Dot grid pattern */
+    .dot-grid {
+      background-image: radial-gradient(circle, rgba(100,116,139,0.16) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .dark .dot-grid {
+      background-image: radial-gradient(circle, rgba(148,163,184,0.09) 1px, transparent 1px);
+    }
+
+    /* Cards */
     .card {
-      border: 1px solid hsl(214.3 31.8% 91.4%);
-      border-radius: 0.75rem;
-      background: #fff;
-      box-shadow: 0 1px 3px rgba(0,0,0,.05), 0 1px 2px rgba(0,0,0,.04);
-      transition: box-shadow .2s ease, transform .2s ease;
+      border-radius: 1rem;
+      border: 1px solid rgba(203,213,225,0.6);
+      background: rgba(255,255,255,0.9);
+      transition: box-shadow .25s ease, transform .25s ease, border-color .25s ease;
     }
-    .card:hover { box-shadow: 0 8px 30px rgba(0,0,0,.10); transform: translateY(-3px); }
-
-    /* shadcn badge */
-    .badge {
-      display: inline-flex; align-items: center; gap: .375rem;
-      border-radius: 9999px; padding: .25rem .75rem;
-      font-size: .75rem; font-weight: 500; line-height: 1;
+    .dark .card {
+      border: 1px solid rgba(51,65,85,0.65);
+      background: rgba(15,23,42,0.75);
     }
-    .badge-blue  { background: rgba(59,130,246,.12); color: #2563eb; border: 1px solid rgba(59,130,246,.25); }
-    .badge-green { background: rgba(34,197,94,.10);  color: #16a34a; border: 1px solid rgba(34,197,94,.25); }
-    .badge-amber { background: rgba(245,158,11,.10); color: #b45309; border: 1px solid rgba(245,158,11,.25); }
-    .badge-slate { background: rgba(100,116,139,.10); color: #475569; border: 1px solid rgba(100,116,139,.2); }
-
-    /* timeline */
-    .timeline-line { position: relative; padding-left: 2rem; }
-    .timeline-line::before {
-      content: '';
-      position: absolute; left: .625rem; top: .5rem; bottom: 0;
-      width: 2px; background: hsl(214.3 31.8% 91.4%);
+    .card:hover {
+      box-shadow: 0 12px 40px rgba(13,148,136,0.12), 0 2px 8px rgba(0,0,0,0.06);
+      transform: translateY(-4px);
+      border-color: rgba(13,148,136,0.28);
     }
-    .timeline-dot {
-      position: absolute; left: 0; top: .375rem;
-      width: 1.25rem; height: 1.25rem; border-radius: 50%;
-      border: 2px solid #2563eb; background: #fff;
-      display: flex; align-items: center; justify-content: center;
+    .dark .card:hover {
+      box-shadow: 0 12px 40px rgba(13,148,136,0.18), 0 2px 8px rgba(0,0,0,0.3);
     }
-    .timeline-dot span { width: .5rem; height: .5rem; border-radius: 50%; background: #2563eb; }
 
-    /* nav scroll behaviour */
-    nav.scrolled { box-shadow: 0 1px 12px rgba(0,0,0,.08); }
+    /* Tech badges */
+    .tech-badge {
+      display: inline-flex; align-items: center; gap: .3rem;
+      padding: .28rem .75rem; border-radius: 9999px;
+      font-size: .7rem; font-weight: 600; letter-spacing: .02em;
+      border: 1px solid; transition: all .2s ease;
+    }
+    .badge-teal    { background: rgba(13,148,136,.1);  color: #0d9488; border-color: rgba(13,148,136,.25); }
+    .badge-slate   { background: rgba(100,116,139,.08); color: #475569; border-color: rgba(100,116,139,.2); }
+    .badge-amber   { background: rgba(217,119,6,.08);  color: #b45309; border-color: rgba(217,119,6,.2); }
+    .badge-sky     { background: rgba(14,165,233,.08); color: #0284c7; border-color: rgba(14,165,233,.2); }
+    .badge-emerald { background: rgba(16,185,129,.08); color: #059669; border-color: rgba(16,185,129,.2); }
+    .dark .badge-teal    { background: rgba(13,148,136,.18); color: #2dd4bf; border-color: rgba(45,212,191,.25); }
+    .dark .badge-slate   { background: rgba(148,163,184,.1); color: #94a3b8; border-color: rgba(148,163,184,.2); }
+    .dark .badge-amber   { background: rgba(251,191,36,.1);  color: #fbbf24; border-color: rgba(251,191,36,.2); }
+    .dark .badge-sky     { background: rgba(56,189,248,.1);  color: #38bdf8; border-color: rgba(56,189,248,.2); }
+    .dark .badge-emerald { background: rgba(52,211,153,.1);  color: #34d399; border-color: rgba(52,211,153,.2); }
 
-    /* mobile menu */
+    /* OSS card highlight border */
+    .oss-highlight { position: relative; }
+    .oss-highlight::after {
+      content: ''; position: absolute; inset: 0;
+      border-radius: 1rem; border: 1.5px solid rgba(13,148,136,0.35);
+      pointer-events: none;
+    }
+    .dark .oss-highlight::after { border-color: rgba(45,212,191,0.28); }
+
+    /* Section label */
+    .section-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: #0d9488; display: block;
+    }
+    .dark .section-label { color: #2dd4bf; }
+
+    /* Skill group sub-label */
+    .skill-group-header {
+      font-size: .62rem; font-weight: 700; letter-spacing: .15em;
+      text-transform: uppercase; display: block; margin-bottom: .75rem;
+    }
+
+    /* CTA buttons */
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      padding: .875rem 2rem; border-radius: .875rem;
+      background: #0d9488; color: #fff; font-weight: 700; font-size: .9rem;
+      transition: all .2s ease; box-shadow: 0 4px 20px rgba(13,148,136,.35);
+    }
+    .btn-primary:hover { background: #0f766e; box-shadow: 0 6px 28px rgba(13,148,136,.45); transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      padding: .875rem 2rem; border-radius: .875rem;
+      border: 1.5px solid rgba(13,148,136,.35); color: #0d9488; font-weight: 600; font-size: .9rem;
+      transition: all .2s ease;
+    }
+    .btn-ghost:hover { border-color: #0d9488; background: rgba(13,148,136,.06); }
+    .dark .btn-ghost { color: #2dd4bf; border-color: rgba(45,212,191,.35); }
+    .dark .btn-ghost:hover { border-color: #2dd4bf; background: rgba(45,212,191,.08); }
+
+    /* Stat pill */
+    .stat-pill {
+      padding: 1.2rem 1.5rem; border-radius: 1rem;
+      background: rgba(15,23,42,0.05); border: 1px solid rgba(0,0,0,0.07);
+    }
+    .dark .stat-pill { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.09); }
+
+    /* Stack diagram layer */
+    .stack-layer {
+      border-left: 3px solid; padding: .75rem 1.25rem;
+      border-radius: 0 .75rem .75rem 0; transition: transform .2s ease;
+    }
+    .stack-layer:hover { transform: translateX(4px); }
+
+    /* Scroll indicator */
+    .scroll-indicator { width: 1.75rem; height: 2.5rem; border-radius: 999px; border: 2px solid rgba(255,255,255,.22); display: flex; justify-content: center; padding-top: .4rem; }
+    .scroll-dot { width: 4px; height: 8px; border-radius: 999px; background: rgba(255,255,255,.45); animation: scrollBounce 1.8s ease-in-out infinite; }
+    @keyframes scrollBounce { 0%,100% { transform: translateY(0); opacity:.5; } 50% { transform: translateY(8px); opacity:1; } }
+
+    /* Mobile menu */
     #mobile-menu { display: none; }
     #mobile-menu.open { display: block; }
+
+    /* Reveal animation */
+    .reveal { opacity: 0; transform: translateY(22px); }
+    .reveal.visible { animation: fadeUp 0.6s ease-out forwards; }
+    @keyframes fadeUp { 0% { opacity:0; transform:translateY(22px); } 100% { opacity:1; transform:translateY(0); } }
+
+    /* Focus */
+    :focus-visible { outline: 2px solid #0d9488; outline-offset: 3px; }
+
+    /* Nav scrolled */
+    nav.scrolled { box-shadow: 0 1px 16px rgba(0,0,0,.07); }
+    .dark nav.scrolled { box-shadow: 0 1px 16px rgba(0,0,0,.35); }
+
+    /* Chips flex wrap */
+    .chips { display: flex; flex-wrap: wrap; gap: .45rem; }
   </style>
 </head>
 
-<body class="bg-white text-slate-900 antialiased">
+<body class="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased transition-colors duration-300">
 
-  <!-- ════════════════════════════════ NAV ════════════════════════════════ -->
-  <nav id="navbar" class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-slate-100 transition-shadow duration-300">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+  <!-- ═══════════════════════ NAV ═══════════════════════ -->
+  <nav id="navbar" class="fixed top-0 w-full z-50 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-100 dark:border-slate-800/60 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
-      <!-- Logo -->
-      <a href="#top" class="flex items-center gap-1.5 select-none">
-        <span class="text-xl font-extrabold tracking-tight gradient-text">R2H</span>
-        <span class="text-slate-500 font-semibold text-sm">Solutions</span>
+      <a href="#top" class="flex flex-col gap-0 select-none group" aria-label="Torna in cima">
+        <span class="flex items-center gap-1.5">
+          <span class="font-mono text-xs font-semibold text-slate-400 dark:text-slate-500 group-hover:text-teal-600 transition-colors">&lt;</span>
+          <span class="text-base font-extrabold tracking-tight text-slate-900 dark:text-white">Aniello <span class="accent-text">D'Andrea</span></span>
+          <span class="font-mono text-xs font-semibold text-slate-400 dark:text-slate-500 group-hover:text-teal-600 transition-colors">/&gt;</span>
+        </span>
+        <span class="text-[9px] font-bold tracking-[.2em] uppercase text-slate-400 dark:text-slate-600 pl-4 group-hover:text-teal-600 dark:group-hover:text-teal-500 transition-colors">R2H Solutions</span>
       </a>
 
-      <!-- Desktop links -->
-      <div class="hidden md:flex items-center gap-8">
-        <a href="#about"      class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Chi sono</a>
-        <a href="#experience" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Esperienza</a>
-        <a href="#services"   class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Servizi</a>
-        <a href="#contact"    class="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
-          Contattami
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-        </a>
+      <div class="hidden lg:flex items-center gap-7">
+        <a href="#competenze" class="nav-link text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Competenze</a>
+        <a href="#opensource" class="nav-link text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Open Source</a>
+        <a href="#ai"         class="nav-link text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">AI</a>
+        <a href="#pa"         class="nav-link text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">PA &amp; Progetti</a>
+        <a href="#profilo"    class="nav-link text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Profilo</a>
       </div>
 
-      <!-- Hamburger -->
-      <button id="menu-btn" class="md:hidden p-2 rounded-md text-slate-500 hover:bg-slate-100" aria-label="Apri menu">
-        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-      </button>
+      <div class="flex items-center gap-3">
+        <!-- Dark toggle -->
+        <button id="dark-toggle" aria-label="Cambia tema"
+          class="w-9 h-9 rounded-lg flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+          <svg class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/>
+          </svg>
+          <svg class="w-5 h-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"/>
+          </svg>
+        </button>
+
+        <a href="mailto:ing.aniellodandrea@r2hsolutions.it"
+           class="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold rounded-lg shadow-sm shadow-teal-700/20 transition-all hover:-translate-y-px">
+          Scrivimi
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+
+        <button id="menu-btn" class="lg:hidden w-9 h-9 rounded-lg flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Apri menu">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
     </div>
 
     <!-- Mobile menu -->
-    <div id="mobile-menu" class="border-t border-slate-100 bg-white/98 px-6 pb-4 md:hidden">
-      <div class="flex flex-col gap-3 pt-3">
-        <a href="#about"      class="py-2 text-sm font-medium text-slate-700">Chi sono</a>
-        <a href="#experience" class="py-2 text-sm font-medium text-slate-700">Esperienza</a>
-        <a href="#services"   class="py-2 text-sm font-medium text-slate-700">Servizi</a>
-        <a href="#contact"    class="mt-2 px-4 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-lg text-center">Contattami</a>
+    <div id="mobile-menu" class="border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 px-6 pb-5 lg:hidden">
+      <div class="flex flex-col gap-1 pt-4">
+        <a href="#competenze" class="py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300">Competenze</a>
+        <a href="#opensource" class="py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300">Open Source</a>
+        <a href="#ai"         class="py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300">AI</a>
+        <a href="#pa"         class="py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300">PA &amp; Progetti</a>
+        <a href="#profilo"    class="py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300">Profilo</a>
+        <a href="mailto:ing.aniellodandrea@r2hsolutions.it"
+           class="mt-3 px-5 py-3 bg-teal-600 text-white text-sm font-semibold rounded-lg text-center">Scrivimi</a>
       </div>
     </div>
   </nav>
 
-  <!-- ════════════════════════════════ HERO ════════════════════════════════ -->
-  <section id="top" class="hero-bg min-h-screen flex items-center pt-16">
-    <div class="max-w-6xl mx-auto px-6 py-24 w-full">
+  <!-- ═══════════════════════ HERO ═══════════════════════ -->
+  <section id="top" class="relative min-h-screen flex flex-col justify-center overflow-hidden pt-20">
+    <div class="absolute inset-0 dot-grid pointer-events-none"></div>
+    <div class="absolute inset-0 hero-bg pointer-events-none"></div>
+    <div class="absolute top-1/3 right-1/4 w-80 h-80 rounded-full bg-teal-400/8 blur-3xl pointer-events-none" style="animation: float 8s ease-in-out infinite;"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6 py-20 w-full">
       <div class="max-w-3xl">
 
-        <!-- Status badge -->
-        <div class="badge badge-blue mb-6">
-          <span class="w-2 h-2 rounded-full bg-blue-500 inline-block" style="animation: pulse 2s infinite; box-shadow: 0 0 0 0 rgba(59,130,246,.6)"></span>
-          Disponibile per nuovi progetti
+        <!-- Role tag -->
+        <div class="inline-flex items-center gap-2 mb-7 px-3.5 py-1.5 rounded-full border border-teal-600/25 bg-teal-50/60 dark:bg-teal-950/50 dark:border-teal-500/25">
+          <span class="w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
+          <span class="text-xs font-semibold text-teal-700 dark:text-teal-300 tracking-wide">Software Developer · PA · AI &amp; Open Source</span>
         </div>
 
-        <!-- Heading -->
-        <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-[1.05] tracking-tight mb-6">
-          Aniello<br/>
-          <span class="gradient-text">D'Andrea</span>
+        <!-- Headline -->
+        <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold leading-[1.04] tracking-tight text-slate-900 dark:text-white mb-6">
+          Aniello<br/><span class="accent-text">D'Andrea</span>
         </h1>
 
-        <!-- Sub -->
-        <p class="text-lg md:text-xl text-slate-300 mb-10 leading-relaxed max-w-2xl">
-          Consulente con oltre <strong class="text-white font-semibold">15 anni di esperienza</strong> nella
-          <strong class="text-white font-semibold">Pubblica Amministrazione</strong> e nella gestione dei
-          <strong class="text-white font-semibold">Fondi Europei per l'Agricoltura</strong>.
-          Expertise in PSR, FEAGA, FEASR e sistemi informativi regionali per il settore agricolo.
+        <!-- Subheadline -->
+        <p class="text-lg md:text-xl text-slate-600 dark:text-slate-300 mb-5 leading-relaxed max-w-2xl">
+          Sviluppatore software con <strong class="text-slate-900 dark:text-white font-semibold">oltre 15 anni di esperienza</strong>, di cui <strong class="text-slate-900 dark:text-white font-semibold">più di 10 nella Pubblica Amministrazione</strong>. Architetture open source, sistemi informativi regionali e intelligenza artificiale applicata ai processi istruttori.
         </p>
 
-        <!-- CTA buttons -->
+        <!-- Spec tags -->
+        <div class="chips mb-10">
+          <span class="tech-badge badge-teal">Node.js / TypeScript</span>
+          <span class="tech-badge badge-teal">React / Remix</span>
+          <span class="tech-badge badge-teal">PostgreSQL</span>
+          <span class="tech-badge badge-teal">RAG / LlamaIndex</span>
+          <span class="tech-badge badge-slate">Fondi Europei Agric.</span>
+          <span class="tech-badge badge-slate">SIARC / PSR</span>
+        </div>
+
+        <!-- CTA row -->
         <div class="flex flex-col sm:flex-row gap-4 mb-16">
-          <a href="#contact"
-             class="px-8 py-4 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-500 transition-colors shadow-lg shadow-blue-700/30 text-center">
-            Collabora con me
+          <a href="mailto:ing.aniellodandrea@r2hsolutions.it" class="btn-primary">
+            Contattami
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>
           </a>
-          <a href="#experience"
-             class="px-8 py-4 bg-white/10 text-white font-semibold rounded-xl hover:bg-white/15 transition-colors border border-white/20 text-center">
-            Scopri l'esperienza
+          <a href="#competenze" class="btn-ghost">
+            Scopri le competenze
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
           </a>
         </div>
 
         <!-- Stats row -->
-        <div class="grid grid-cols-3 gap-6 max-w-sm">
-          <div class="text-center">
-            <p class="text-3xl font-extrabold text-white">15+</p>
-            <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Anni</p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="stat-pill">
+            <p class="text-2xl font-extrabold text-teal-600 dark:text-teal-400">15+</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 font-medium">Anni esperienza</p>
           </div>
-          <div class="text-center border-x border-white/10">
-            <p class="text-3xl font-extrabold text-white">PA</p>
-            <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Pubbl. Admin.</p>
+          <div class="stat-pill">
+            <p class="text-2xl font-extrabold text-teal-600 dark:text-teal-400">10+</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 font-medium">Anni nella PA</p>
           </div>
-          <div class="text-center">
-            <p class="text-3xl font-extrabold text-white">UE</p>
-            <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Fondi Europei</p>
+          <div class="stat-pill">
+            <p class="text-2xl font-extrabold text-teal-600 dark:text-teal-400">OSS</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 font-medium">Open source stack</p>
+          </div>
+          <div class="stat-pill">
+            <p class="text-2xl font-extrabold text-teal-600 dark:text-teal-400">AI</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 font-medium">Doc intelligence PA</p>
           </div>
         </div>
+
       </div>
     </div>
 
-    <!-- curved divider -->
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+      <div class="scroll-indicator"><div class="scroll-dot"></div></div>
+    </div>
+
+    <!-- Wave divider -->
     <div class="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none" style="line-height:0">
-      <svg viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:60px">
-        <path d="M0,60 C400,0 800,0 1200,60 L1200,60 L0,60 Z" fill="#ffffff"/>
+      <svg viewBox="0 0 1440 52" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:52px" class="fill-white dark:fill-slate-950">
+        <path d="M0,52 C360,0 720,0 1080,26 C1260,39 1380,13 1440,0 L1440,52 Z"/>
       </svg>
     </div>
   </section>
 
-  <!-- ════════════════════════════════ ABOUT ════════════════════════════════ -->
-  <section id="about" class="py-20 bg-white">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="grid md:grid-cols-2 gap-16 items-center">
+  <!-- ═══════════════════════ COMPETENZE TECNICHE ═══════════════════════ -->
+  <section id="competenze" class="py-24 bg-white dark:bg-slate-950">
+    <div class="max-w-7xl mx-auto px-6">
 
-        <!-- Text -->
+      <div class="mb-12">
+        <span class="section-label mb-3">Competenze Tecniche</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white max-w-xl leading-snug">
+          Stack moderno,<br/>architetture solide.
+        </h2>
+        <p class="text-slate-500 dark:text-slate-400 mt-4 max-w-2xl leading-relaxed">
+          Full-stack e data layer, con focus su architetture open source, microservizi REST e integrazione con sistemi informativi della PA.
+        </p>
+      </div>
+
+      <!-- OSS callout bar -->
+      <div class="mb-10 p-4 rounded-xl bg-teal-50 dark:bg-teal-950/40 border border-teal-200/60 dark:border-teal-700/40 flex flex-wrap items-center gap-3">
+        <span class="text-xs font-bold text-teal-700 dark:text-teal-300 uppercase tracking-wider shrink-0">Stack principale (Open Source)</span>
+        <div class="chips">
+          <span class="tech-badge badge-teal">Node.js</span>
+          <span class="tech-badge badge-teal">TypeScript</span>
+          <span class="tech-badge badge-teal">React</span>
+          <span class="tech-badge badge-teal">Remix</span>
+          <span class="tech-badge badge-teal">Express.js</span>
+          <span class="tech-badge badge-teal">PostgreSQL</span>
+          <span class="tech-badge badge-teal">Prisma ORM</span>
+          <span class="tech-badge badge-teal">MongoDB</span>
+          <span class="tech-badge badge-teal">NGINX</span>
+          <span class="tech-badge badge-teal">Ubuntu Server</span>
+        </div>
+      </div>
+
+      <!-- Skill groups grid -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <!-- Frontend -->
+        <div class="card p-6 reveal">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-teal-600 dark:text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0H3"/></svg>
+            </div>
+            <h3 class="font-bold text-slate-800 dark:text-slate-100">Frontend &amp; UX</h3>
+          </div>
+          <div class="chips mb-4">
+            <span class="tech-badge badge-teal">React</span>
+            <span class="tech-badge badge-teal">Remix</span>
+            <span class="tech-badge badge-teal">TypeScript</span>
+            <span class="tech-badge badge-teal">JavaScript</span>
+            <span class="tech-badge badge-slate">Chakra UI</span>
+            <span class="tech-badge badge-slate">Design React Kit</span>
+            <span class="tech-badge badge-slate">HTML5 / CSS3</span>
+            <span class="tech-badge badge-slate">jQuery</span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">SPA e MPA moderni per portali istruttorie, workflow domande e cruscotti PA. Accessibilità AGID e design system istituzionali.</p>
+        </div>
+
+        <!-- Backend -->
+        <div class="card p-6 reveal">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-10 rounded-xl bg-sky-50 dark:bg-sky-900/20 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-sky-600 dark:text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 0 6h13.5a3 3 0 1 0 0-6m-16.5-3a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3m-19.5 0a4.5 4.5 0 0 1 .9-2.7L5.737 5.1a3.375 3.375 0 0 1 2.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 0 1 .9 2.7m0 0a3 3 0 0 1-3 3m0 3h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Zm-3 6h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Z"/></svg>
+            </div>
+            <h3 class="font-bold text-slate-800 dark:text-slate-100">Backend &amp; API</h3>
+          </div>
+          <div class="chips mb-4">
+            <span class="tech-badge badge-teal">Node.js</span>
+            <span class="tech-badge badge-teal">Express.js</span>
+            <span class="tech-badge badge-sky">Java</span>
+            <span class="tech-badge badge-sky">Spring Boot</span>
+            <span class="tech-badge badge-slate">ASP.NET MVC</span>
+            <span class="tech-badge badge-slate">WCF</span>
+            <span class="tech-badge badge-slate">REST Microservizi</span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Architetture modulari per sistemi informativi regionali. API REST sicure integrate con SIAN, registri camerali e sistemi PA.</p>
+        </div>
+
+        <!-- Database -->
+        <div class="card p-6 reveal">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 2.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125m16.5 2.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/></svg>
+            </div>
+            <h3 class="font-bold text-slate-800 dark:text-slate-100">Database &amp; Data Layer</h3>
+          </div>
+          <div class="chips mb-4">
+            <span class="tech-badge badge-teal">PostgreSQL</span>
+            <span class="tech-badge badge-teal">MongoDB</span>
+            <span class="tech-badge badge-teal">Prisma ORM</span>
+            <span class="tech-badge badge-slate">Oracle 9i/11g</span>
+            <span class="tech-badge badge-slate">SQL Server</span>
+            <span class="tech-badge badge-slate">PL/SQL</span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Progettazione schemi relazionali, query complesse e tuning. ORM tipizzato con Prisma per ambienti Node.js/TypeScript.</p>
+        </div>
+
+        <!-- API & Integrazione -->
+        <div class="card p-6 reveal">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-900/20 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/></svg>
+            </div>
+            <h3 class="font-bold text-slate-800 dark:text-slate-100">API &amp; Integrazione</h3>
+          </div>
+          <div class="chips mb-4">
+            <span class="tech-badge badge-amber">REST API sicure</span>
+            <span class="tech-badge badge-amber">SIAN</span>
+            <span class="tech-badge badge-amber">Reg. camerali</span>
+            <span class="tech-badge badge-amber">Fascicolo aziendale</span>
+            <span class="tech-badge badge-slate">Scraping bot</span>
+            <span class="tech-badge badge-slate">Interoperabilità PA</span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Integrazione con SIAN, banche dati camerali, registri esterni e sistemi AGEA per controlli automatizzati di conformità.</p>
+        </div>
+
+        <!-- DevOps -->
+        <div class="card p-6 reveal">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-slate-600 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 17.25v2.25H2.25v-2.25M2.25 6.75h19.5v2.25H2.25V6.75Zm0 5.25h19.5v2.25H2.25v-2.25Z"/></svg>
+            </div>
+            <h3 class="font-bold text-slate-800 dark:text-slate-100">DevOps &amp; Infrastruttura</h3>
+          </div>
+          <div class="chips mb-4">
+            <span class="tech-badge badge-teal">NGINX</span>
+            <span class="tech-badge badge-teal">Ubuntu Server</span>
+            <span class="tech-badge badge-slate">Linux</span>
+            <span class="tech-badge badge-slate">Git</span>
+            <span class="tech-badge badge-slate">SVN / TFS</span>
+            <span class="tech-badge badge-slate">IIS / JBoss</span>
+            <span class="tech-badge badge-slate">Apache Tomcat</span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Deployment in produzione su ambienti Linux, NGINX come reverse proxy. Versioning e workflow collaborativi con Git e sistemi enterprise.</p>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="card p-6 reveal">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-900/20 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-rose-500 dark:text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z"/></svg>
+            </div>
+            <h3 class="font-bold text-slate-800 dark:text-slate-100">Enterprise &amp; Interoperabilità</h3>
+          </div>
+          <div class="chips mb-4">
+            <span class="tech-badge badge-slate">C# / ASP.NET MVC</span>
+            <span class="tech-badge badge-slate">Java / RxJava</span>
+            <span class="tech-badge badge-slate">Oracle PL/SQL</span>
+            <span class="tech-badge badge-slate">SQL Server</span>
+            <span class="tech-badge badge-slate">WCF / SOAP</span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Sistemi legacy enterprise: protocolli, personale, flussi documentali, con migrazione progressiva verso stack open source moderni.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ OPEN SOURCE & ARCHITETTURA ═══════════════════════ -->
+  <section id="opensource" class="py-24 bg-slate-50 dark:bg-slate-900">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="mb-12">
+        <span class="section-label mb-3">Open Source &amp; Architettura</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white max-w-xl leading-snug">
+          Stack modulare,<br/>open source by design.
+        </h2>
+        <p class="text-slate-500 dark:text-slate-400 mt-4 max-w-2xl leading-relaxed">
+          I progetti recenti si basano su uno stack completamente open source, con focus su interoperabilità, performance e manutenibilità in contesti enterprise e PA.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-10 items-start">
+
+        <!-- Stack diagram -->
         <div>
-          <p class="text-xs font-semibold text-blue-600 uppercase tracking-[.15em] mb-3">Chi sono</p>
-          <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-5 leading-snug">
-            Dalla teoria<br/>alla pratica sui fondi UE
-          </h2>
-          <p class="text-slate-600 leading-relaxed mb-6">
-            Ho costruito la mia carriera all'interno della <span class="font-semibold text-slate-800">Pubblica Amministrazione</span>,
-            acquisendo una conoscenza approfondita delle procedure di gestione, controllo e rendicontazione
-            dei finanziamenti europei nel settore agricolo e dello sviluppo rurale.
-          </p>
-          <p class="text-slate-600 leading-relaxed mb-8">
-            Con R2H Solutions metto a disposizione di enti pubblici, imprese agricole e operatori del
-            settore agro-alimentare l'esperienza maturata in anni di lavoro sul campo: dalla progettazione
-            delle domande di aiuto fino alla chiusura dei controlli, con piena conoscenza dei regolamenti
-            FEAGA e FEASR e degli strumenti informatici dedicati (AGEA, SIARC, SIN).
-          </p>
-
-          <!-- Skill chips -->
-          <div class="flex flex-wrap gap-2">
-            <span class="badge badge-blue">PSR / PNSR</span>
-            <span class="badge badge-blue">FEAGA · FEASR</span>
-            <span class="badge badge-green">AGEA / ARTEA</span>
-            <span class="badge badge-green">Sviluppo Rurale</span>
-            <span class="badge badge-amber">Gestione Procedure</span>
-            <span class="badge badge-amber">Controlli in loco</span>
-            <span class="badge badge-slate">Normativa UE</span>
-            <span class="badge badge-slate">Digitalizzazione PA</span>
+          <span class="skill-group-header text-slate-400">Architettura applicativa</span>
+          <div class="space-y-3">
+            <div class="stack-layer border-teal-500 bg-teal-50 dark:bg-teal-950/40">
+              <p class="text-xs font-bold text-teal-700 dark:text-teal-300 uppercase tracking-wider mb-0.5">Frontend</p>
+              <p class="text-sm text-slate-700 dark:text-slate-200 font-medium">React · Remix · TypeScript · Chakra UI</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">SPA/MPA, workflow guidati, cruscotti istruttorie, accessibilità AGID</p>
+            </div>
+            <div class="stack-layer border-sky-500 bg-sky-50 dark:bg-sky-950/30">
+              <p class="text-xs font-bold text-sky-700 dark:text-sky-300 uppercase tracking-wider mb-0.5">Backend / API</p>
+              <p class="text-sm text-slate-700 dark:text-slate-200 font-medium">Node.js · Express.js · REST Microservizi</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">API sicure, autenticazione, integrazione sistemi esterni</p>
+            </div>
+            <div class="stack-layer border-emerald-500 bg-emerald-50 dark:bg-emerald-950/30">
+              <p class="text-xs font-bold text-emerald-700 dark:text-emerald-300 uppercase tracking-wider mb-0.5">Data Layer</p>
+              <p class="text-sm text-slate-700 dark:text-slate-200 font-medium">PostgreSQL · Prisma ORM · MongoDB</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Schemi relazionali, migrations, dati documentali e log</p>
+            </div>
+            <div class="stack-layer border-amber-500 bg-amber-50 dark:bg-amber-950/30">
+              <p class="text-xs font-bold text-amber-700 dark:text-amber-300 uppercase tracking-wider mb-0.5">Integrazione</p>
+              <p class="text-sm text-slate-700 dark:text-slate-200 font-medium">SIAN · Registri camerali · Fascicolo aziendale</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Bot scraping, download documenti, controlli conformità</p>
+            </div>
+            <div class="stack-layer border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800/50">
+              <p class="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-0.5">Infrastruttura</p>
+              <p class="text-sm text-slate-700 dark:text-slate-200 font-medium">NGINX · Ubuntu Server · Git</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Reverse proxy, deployment produzione, versioning</p>
+            </div>
           </div>
         </div>
 
-        <!-- Feature cards -->
+        <!-- Principles cards -->
         <div class="grid grid-cols-2 gap-4">
-          <div class="card p-5 col-span-2">
-            <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center mb-3">
-              <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z"/></svg>
+          <div class="card p-5 reveal">
+            <div class="w-9 h-9 rounded-lg bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center mb-3">
+              <svg class="w-4 h-4 text-teal-600 dark:text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
             </div>
-            <h3 class="font-semibold text-slate-800 mb-1">Esperienza pluriennale in PA</h3>
-            <p class="text-sm text-slate-500">Anni di lavoro diretto con enti regionali e organismi pagatori, con padronanza dei processi istituzionali.</p>
+            <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm mb-1">Performance</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Query ottimizzate, caching strategico, bundle minimali e lazy loading.</p>
           </div>
-          <div class="card p-5">
-            <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center mb-3">
-              <svg class="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"/></svg>
+          <div class="card p-5 reveal">
+            <div class="w-9 h-9 rounded-lg bg-sky-50 dark:bg-sky-900/20 flex items-center justify-center mb-3">
+              <svg class="w-4 h-4 text-sky-600 dark:text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z"/></svg>
             </div>
-            <h3 class="font-semibold text-slate-800 mb-1">Fondi UE Agricoltura</h3>
-            <p class="text-sm text-slate-500">Gestione misure PSR, istruttorie e rendicontazioni FEAGA/FEASR.</p>
+            <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm mb-1">Modularità</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Microservizi disaccoppiati, API con contratti chiari, deploy indipendenti.</p>
           </div>
-          <div class="card p-5">
-            <div class="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center mb-3">
-              <svg class="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+          <div class="card p-5 reveal">
+            <div class="w-9 h-9 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center mb-3">
+              <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
             </div>
-            <h3 class="font-semibold text-slate-800 mb-1">Controlli & Compliance</h3>
-            <p class="text-sm text-slate-500">Pianificazione e conduzione di controlli in loco secondo i regolamenti europei.</p>
+            <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm mb-1">Sicurezza</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">API sicure, autenticazione robusta, validazione input ai boundary di sistema.</p>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════ EXPERIENCE ═══════════════════════════ -->
-  <section id="experience" class="py-20 bg-slate-50">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="text-center mb-14">
-        <p class="text-xs font-semibold text-blue-600 uppercase tracking-[.15em] mb-3">Percorso Professionale</p>
-        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900">Esperienza che fa la differenza</h2>
-        <p class="text-slate-500 mt-3 max-w-xl mx-auto">Oltre un decennio di opera concreta nella PA e nei programmi europei dedicati all'agricoltura.</p>
-      </div>
-
-      <div class="max-w-3xl mx-auto space-y-6">
-
-        <!-- ── ULTIMO RUOLO ── -->
-        <div class="card p-7 relative overflow-hidden">
-          <!-- accent bar -->
-          <div class="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl bg-blue-600"></div>
-          <div class="pl-2">
-            <div class="flex flex-wrap items-start justify-between gap-3 mb-4">
+          <div class="card p-5 reveal">
+            <div class="w-9 h-9 rounded-lg bg-amber-50 dark:bg-amber-900/20 flex items-center justify-center mb-3">
+              <svg class="w-4 h-4 text-amber-600 dark:text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z"/></svg>
+            </div>
+            <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm mb-1">Manutenibilità</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">TypeScript end-to-end, ORM tipizzato, codice leggibile e testabile nel tempo.</p>
+          </div>
+          <div class="card p-5 col-span-2 reveal">
+            <div class="flex items-start gap-4">
+              <div class="w-9 h-9 rounded-lg bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-teal-600 dark:text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/></svg>
+              </div>
               <div>
-                <span class="badge badge-blue mb-2">Ruolo attuale</span>
-                <h3 class="text-xl font-bold text-slate-900">Consulente Senior – Fondi Strutturali & PA</h3>
-                <p class="text-blue-600 font-medium text-sm mt-0.5">R2H Solutions · Roma / Campania</p>
+                <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm mb-1">Interoperabilità con la PA</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Moduli di integrazione con sistemi informativi nazionali: SIAN, banche dati camerali, registri esterni e fascicoli aziendali per controlli automatizzati di conformità e requisiti dei beneficiari.</p>
               </div>
-              <span class="badge badge-slate whitespace-nowrap">2022 – presente</span>
-            </div>
-            <p class="text-slate-600 leading-relaxed mb-5">
-              Attività di consulenza specialistica per enti pubblici e privati nell'ambito della progettazione,
-              gestione e rendicontazione di interventi finanziati con fondi strutturali europei,
-              con focus sui Piani di Sviluppo Rurale (PSR) e i regolamenti FEAGA/FEASR.
-              Supporto tecnico nella digitalizzazione dei processi amministrativi e nell'utilizzo dei
-              sistemi informativi dedicati (SIARC, SIN, portali AGEA).
-            </p>
-            <div class="flex flex-wrap gap-2">
-              <span class="badge badge-blue">PSR Campania</span>
-              <span class="badge badge-blue">FEAGA · FEASR</span>
-              <span class="badge badge-green">SIARC / SIN</span>
-              <span class="badge badge-green">Rendicontazione UE</span>
-              <span class="badge badge-amber">Due Diligence</span>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- ── ESPERIENZA PLURIENNALE PA + FONDI UE ── -->
-        <div class="card p-7 relative overflow-hidden">
-          <div class="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl bg-emerald-500"></div>
+  <!-- ═══════════════════════ AI ═══════════════════════ -->
+  <section id="ai" class="py-24 bg-white dark:bg-slate-950 relative overflow-hidden">
+    <div class="absolute inset-0 dot-grid opacity-50 pointer-events-none"></div>
+    <div class="absolute top-0 right-0 w-96 h-96 rounded-full bg-teal-400/8 blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6">
+
+      <div class="mb-12">
+        <span class="section-label mb-3">Intelligenza Artificiale applicata alla PA</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white max-w-xl leading-snug">
+          AI concreta,<br/>non generica.
+        </h2>
+        <p class="text-slate-500 dark:text-slate-400 mt-4 max-w-2xl leading-relaxed">
+          L'AI non sostituisce l'istruttore — lo supporta con evidenze tracciate, motivazioni in linguaggio naturale e deep-link alla normativa. Privacy by design, deployment on-premise disponibile.
+        </p>
+      </div>
+
+      <!-- AI Stack -->
+      <div class="mb-10 p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-wrap items-center gap-3">
+        <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider shrink-0">Stack AI</span>
+        <span class="tech-badge badge-teal">Docling</span>
+        <span class="tech-badge badge-teal">LlamaIndex</span>
+        <span class="tech-badge badge-teal">Milvus</span>
+        <span class="tech-badge badge-teal">Llama 3</span>
+        <span class="tech-badge badge-teal">Mistral</span>
+        <span class="tech-badge badge-teal">Qwen</span>
+        <span class="tech-badge badge-slate">GPT-4o</span>
+        <span class="tech-badge badge-slate">Claude</span>
+        <span class="tech-badge badge-slate">Gemini</span>
+        <span class="tech-badge badge-slate">RAG Pipeline</span>
+        <span class="tech-badge badge-slate">Embeddings</span>
+        <span class="tech-badge badge-slate">Vector DB</span>
+      </div>
+
+      <!-- AI sub-sections grid -->
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+
+        <div class="card p-7 reveal oss-highlight">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-11 h-11 rounded-xl bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-teal-600 dark:text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-1">Analisi documentale</h3>
+              <p class="text-xs text-teal-600 dark:text-teal-400 font-semibold">Docling · PDF / Office / immagini</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">Parsing avanzato di PDF, documenti Office e immagini per l'estrazione strutturata di contenuti amministrativi: domande di sostegno, relazioni tecniche, preventivi, fascicoli aziendali.</p>
+        </div>
+
+        <div class="card p-7 reveal oss-highlight">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-11 h-11 rounded-xl bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-teal-600 dark:text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-1">RAG &amp; Knowledge base</h3>
+              <p class="text-xs text-teal-600 dark:text-teal-400 font-semibold">LlamaIndex · Milvus · Embeddings</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">Pipeline RAG in 3 fasi (ingestion → indexing → retrieval) per ricerca semantica su normativa, bandi e documentazione. Indicizzazione intelligente con LlamaIndex e vector storage su Milvus.</p>
+        </div>
+
+        <div class="card p-7 reveal">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-11 h-11 rounded-xl bg-sky-50 dark:bg-sky-900/20 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-sky-600 dark:text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-1">Supporto all'istruttoria</h3>
+              <p class="text-xs text-sky-600 dark:text-sky-400 font-semibold">Explainable AI · Scoring automatico</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-3">Scoring automatico con motivazione in linguaggio naturale e deep-link alla normativa. Rilevazione anomalie su preventivi. Suggerimento punteggi ai criteri di bando con validazione dell'istruttore.</p>
+          <div class="chips">
+            <span class="tech-badge badge-sky">Explainable AI</span>
+            <span class="tech-badge badge-sky">Anomaly detection</span>
+            <span class="tech-badge badge-sky">Graduatorie simulate</span>
+          </div>
+        </div>
+
+        <div class="card p-7 reveal">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-1">AI on-premise &amp; privacy</h3>
+              <p class="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">Llama 3 · Mistral · Qwen · deploy locale</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-3">Architetture ibride: modelli cloud SOTA (GPT-4o, Claude, Gemini) per capacità massima; modelli open source on-premise per massima privacy e controllo dei dati sensibili PA.</p>
+          <div class="chips">
+            <span class="tech-badge badge-emerald">Privacy by design</span>
+            <span class="tech-badge badge-emerald">On-premise</span>
+            <span class="tech-badge badge-emerald">Dati sensibili PA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RAG Pipeline steps -->
+      <div class="card p-8 reveal">
+        <span class="skill-group-header text-slate-400">Pipeline RAG – flusso di lavoro</span>
+        <div class="grid sm:grid-cols-3 gap-6 mt-2">
+          <div class="text-center">
+            <div class="w-12 h-12 rounded-full bg-teal-100 dark:bg-teal-900/40 border-2 border-teal-500 flex items-center justify-center mx-auto mb-3">
+              <span class="text-teal-700 dark:text-teal-300 font-bold text-sm">01</span>
+            </div>
+            <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm mb-1">Ingestion</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Raccolta automatica da SIAN, upload manuale, normalizzazione con Docling</p>
+          </div>
+          <div class="text-center">
+            <div class="w-12 h-12 rounded-full bg-teal-100 dark:bg-teal-900/40 border-2 border-teal-500 flex items-center justify-center mx-auto mb-3">
+              <span class="text-teal-700 dark:text-teal-300 font-bold text-sm">02</span>
+            </div>
+            <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm mb-1">Indexing</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Chunking, embedding generation, indicizzazione in Milvus via LlamaIndex</p>
+          </div>
+          <div class="text-center">
+            <div class="w-12 h-12 rounded-full bg-teal-100 dark:bg-teal-900/40 border-2 border-teal-500 flex items-center justify-center mx-auto mb-3">
+              <span class="text-teal-700 dark:text-teal-300 font-bold text-sm">03</span>
+            </div>
+            <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm mb-1">Retrieval</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Ricerca semantica, generazione risposta XAI con deep-link normativa</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ PA & PROGETTI ═══════════════════════ -->
+  <section id="pa" class="py-24 bg-slate-50 dark:bg-slate-900">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="mb-12">
+        <span class="section-label mb-3">Pubblica Amministrazione &amp; Progetti</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white max-w-xl leading-snug">
+          Oltre 10 anni<br/>di sistemi PA reali.
+        </h2>
+        <p class="text-slate-500 dark:text-slate-400 mt-4 max-w-2xl leading-relaxed">
+          Sviluppo e manutenzione di piattaforme digitali per la gestione dei fondi europei e la semplificazione amministrativa, con ruolo centrale su SIARC e sistemi regionali della Campania.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-6">
+
+        <!-- SIARC main card -->
+        <div class="lg:col-span-2 card p-8 reveal relative overflow-hidden">
+          <div class="absolute top-0 left-0 bottom-0 w-1.5 rounded-l-2xl bg-teal-500"></div>
           <div class="pl-2">
-            <div class="flex flex-wrap items-start justify-between gap-3 mb-4">
+            <div class="flex flex-wrap items-start justify-between gap-3 mb-5">
               <div>
-                <span class="badge badge-green mb-2">Esperienza pluriennale</span>
-                <h3 class="text-xl font-bold text-slate-900">Pubblica Amministrazione & Fondi Europei per l'Agricoltura</h3>
-                <p class="text-emerald-700 font-medium text-sm mt-0.5">Enti Regionali / Organismi Pagatori · Campania</p>
+                <span class="tech-badge badge-teal mb-2 inline-flex">SIARC</span>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white">Sistema Informativo Agricolo Regione Campania</h3>
+                <p class="text-teal-600 dark:text-teal-400 font-medium text-sm mt-1">PSR Campania 2014–2022 · CSR Campania 2023–2027</p>
               </div>
-              <span class="badge badge-slate whitespace-nowrap">~2008 – 2022</span>
+              <span class="tech-badge badge-slate whitespace-nowrap">10+ anni</span>
             </div>
-            <p class="text-slate-600 leading-relaxed mb-5">
-              Lunga carriera all'interno della Pubblica Amministrazione con responsabilità crescenti nella
-              gestione dei fondi europei agricoli. Attività comprendenti: istruttoria delle domande di aiuto,
-              pianificazione e conduzione dei controlli in loco, redazione di verbali e relazioni tecniche,
-              coordinamento con gli organismi pagatori (AGEA/organismi delegati) e interlocuzione costante
-              con la Commissione Europea sui programmi di sviluppo rurale.
+            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-5">
+              Sviluppo e manutenzione continuativa di componenti backend e frontend della piattaforma core per la gestione dei fondi europei agricoli. Implementazione workflow digitali completi: dalla presentazione delle domande di sostegno fino alla chiusura con decreti di concessione (DICA) e comunicazioni ai beneficiari.
             </p>
-
-            <!-- Timeline interna -->
-            <div class="space-y-4 mt-6 border-t border-slate-100 pt-5">
-              <div class="flex gap-4">
-                <div class="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-100 border-2 border-emerald-500 flex items-center justify-center mt-0.5">
-                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                </div>
-                <div>
-                  <p class="text-sm font-semibold text-slate-800">Gestione misure PSR – programmazione 2014-2020 / 2023-2027</p>
-                  <p class="text-xs text-slate-500 mt-0.5">Istruttoria, concessione contributi, rendicontazione e chiusura misure agro-ambientali, investimenti aziendali, Leader.</p>
-                </div>
+            <div class="grid sm:grid-cols-2 gap-3 mb-5">
+              <div class="p-3.5 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                <p class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Workflow domande</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Compilazione guidata, firma digitale, protocollo automatico, istruttoria amm.va e tecnica, calcolo punteggi, verbali</p>
               </div>
-              <div class="flex gap-4">
-                <div class="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-100 border-2 border-emerald-500 flex items-center justify-center mt-0.5">
-                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                </div>
-                <div>
-                  <p class="text-sm font-semibold text-slate-800">Controlli FEAGA – pagamenti diretti PAC</p>
-                  <p class="text-xs text-slate-500 mt-0.5">Pianificazione campionamento, esecuzione controlli in loco (amm.vi e fisici), gestione esiti e recuperi.</p>
-                </div>
-              </div>
-              <div class="flex gap-4">
-                <div class="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-100 border-2 border-emerald-500 flex items-center justify-center mt-0.5">
-                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                </div>
-                <div>
-                  <p class="text-sm font-semibold text-slate-800">Sistemi informativi regionali</p>
-                  <p class="text-xs text-slate-500 mt-0.5">Utilizzo e gestione di SIARC, SIN, portale AGEA e banche dati catastali per l'agricoltura.</p>
-                </div>
+              <div class="p-3.5 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                <p class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Integrazione sistemi</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">SIAN scraping bot, download documenti, fascicolo aziendale, registri camerali, controlli conformità</p>
               </div>
             </div>
-
-            <div class="flex flex-wrap gap-2 mt-5">
-              <span class="badge badge-green">Misure PSR</span>
-              <span class="badge badge-green">Pagamenti Diretti PAC</span>
-              <span class="badge badge-blue">Controlli in loco</span>
-              <span class="badge badge-blue">Normativa UE Agric.</span>
-              <span class="badge badge-amber">AGEA</span>
-              <span class="badge badge-amber">Sviluppo Rurale</span>
+            <div class="chips">
+              <span class="tech-badge badge-teal">Node.js / TypeScript</span>
+              <span class="tech-badge badge-teal">React / Remix</span>
+              <span class="tech-badge badge-teal">PostgreSQL</span>
+              <span class="tech-badge badge-teal">Prisma ORM</span>
+              <span class="tech-badge badge-slate">REST API</span>
+              <span class="tech-badge badge-slate">Microservizi</span>
             </div>
           </div>
         </div>
 
+        <!-- Side column -->
+        <div class="flex flex-col gap-5">
+          <div class="card p-6 reveal relative overflow-hidden">
+            <div class="absolute top-0 left-0 bottom-0 w-1.5 rounded-l-2xl bg-slate-300 dark:bg-slate-600"></div>
+            <div class="pl-2">
+              <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-3 text-sm">Altri sistemi regionali</h3>
+              <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                <li class="flex gap-2 items-start"><span class="text-teal-500 mt-0.5 shrink-0">▸</span>Gestione protocolli digitali</li>
+                <li class="flex gap-2 items-start"><span class="text-teal-500 mt-0.5 shrink-0">▸</span>Flussi documentali (delibere, decreti, determine)</li>
+                <li class="flex gap-2 items-start"><span class="text-teal-500 mt-0.5 shrink-0">▸</span>Gestione personale PA</li>
+                <li class="flex gap-2 items-start"><span class="text-teal-500 mt-0.5 shrink-0">▸</span>Sistemi FESR (IFALS, SMILE, altri)</li>
+                <li class="flex gap-2 items-start"><span class="text-teal-500 mt-0.5 shrink-0">▸</span>Monitoraggio e rendicontazione fondi EU</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card p-6 reveal">
+            <h3 class="font-bold text-slate-800 dark:text-slate-100 mb-3 text-sm">Competenze di dominio</h3>
+            <div class="chips">
+              <span class="tech-badge badge-teal">PSR / CSR</span>
+              <span class="tech-badge badge-teal">FEAGA / FEASR</span>
+              <span class="tech-badge badge-amber">Istruttoria tecnica</span>
+              <span class="tech-badge badge-amber">Gestione bandi</span>
+              <span class="tech-badge badge-amber">Graduatorie</span>
+              <span class="tech-badge badge-slate">Audit</span>
+              <span class="tech-badge badge-slate">Compliance PA</span>
+              <span class="tech-badge badge-slate">Workflow digitali</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ambiti di intervento -->
+      <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="card p-5 reveal flex gap-4 items-start">
+          <div class="w-9 h-9 rounded-lg bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4 text-teal-600 dark:text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z"/></svg>
+          </div>
+          <div>
+            <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm mb-1">Sistemi informativi PA</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Piattaforme gestionali per enti regionali, workflow istruttori end-to-end</p>
+          </div>
+        </div>
+        <div class="card p-5 reveal flex gap-4 items-start">
+          <div class="w-9 h-9 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"/></svg>
+          </div>
+          <div>
+            <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm mb-1">Fondi europei &amp; agricoltura</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400">PSR, CSR, FEAGA, FEASR – gestione, controllo, rendicontazione</p>
+          </div>
+        </div>
+        <div class="card p-5 reveal flex gap-4 items-start">
+          <div class="w-9 h-9 rounded-lg bg-sky-50 dark:bg-sky-900/20 flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4 text-sky-600 dark:text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/></svg>
+          </div>
+          <div>
+            <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm mb-1">Interoperabilità</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Integrazione SIAN, registri camerali, fascicoli aziendali, sistemi AGEA</p>
+          </div>
+        </div>
+        <div class="card p-5 reveal flex gap-4 items-start">
+          <div class="w-9 h-9 rounded-lg bg-amber-50 dark:bg-amber-900/20 flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4 text-amber-600 dark:text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"/></svg>
+          </div>
+          <div>
+            <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm mb-1">Sviluppo backend &amp; full stack</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Node.js, TypeScript, React – architetture scalabili per la PA</p>
+          </div>
+        </div>
+        <div class="card p-5 reveal flex gap-4 items-start">
+          <div class="w-9 h-9 rounded-lg bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4 text-teal-600 dark:text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z"/></svg>
+          </div>
+          <div>
+            <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm mb-1">AI per document intelligence</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400">RAG, parsing documentale, scoring XAI per istruttorie e knowledge base PA</p>
+          </div>
+        </div>
+        <div class="card p-5 reveal flex gap-4 items-start">
+          <div class="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4 text-slate-600 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 1-6.23-.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0 1 12 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"/></svg>
+          </div>
+          <div>
+            <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm mb-1">Digitalizzazione processi</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Trasformazione di workflow amministrativi in sistemi digitali tracciabili</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ════════════════════════════════ SERVICES ════════════════════════════ -->
-  <section id="services" class="py-20 bg-white">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="text-center mb-14">
-        <p class="text-xs font-semibold text-blue-600 uppercase tracking-[.15em] mb-3">Cosa offro</p>
-        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900">Servizi di consulenza</h2>
-        <p class="text-slate-500 mt-3 max-w-xl mx-auto">Supporto concreto in ogni fase del ciclo di vita dei fondi europei, con un approccio pratico e orientato ai risultati.</p>
-      </div>
+  <!-- ═══════════════════════ PROFILO ═══════════════════════ -->
+  <section id="profilo" class="py-24 bg-white dark:bg-slate-950">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-2 gap-14 items-center">
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-        <!-- Card 1 -->
-        <div class="card p-6">
-          <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
-            </svg>
-          </div>
-          <h3 class="font-bold text-slate-800 mb-2">Progettazione domande di aiuto</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Assistenza nella predisposizione e presentazione di domande di finanziamento PSR, misure agro-ambientali e investimenti aziendali.</p>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="card p-6">
-          <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"/>
-            </svg>
-          </div>
-          <h3 class="font-bold text-slate-800 mb-2">Gestione & Rendicontazione</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Supporto nella gestione operativa dei progetti finanziati, dalla fase di avvio fino alla rendicontazione finale e chiusura del contributo.</p>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="card p-6">
-          <div class="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
-            </svg>
-          </div>
-          <h3 class="font-bold text-slate-800 mb-2">Audit & Controlli</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Preparazione e accompagnamento durante ispezioni e controlli da parte degli organismi pagatori (AGEA) e delle autorità di audit nazionali/europee.</p>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="card p-6">
-          <div class="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"/>
-            </svg>
-          </div>
-          <h3 class="font-bold text-slate-800 mb-2">Formazione & Training PA</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Sessioni formative e workshop dedicati a funzionari pubblici e operatori del settore sui regolamenti europei e sull'utilizzo dei sistemi informativi.</p>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="card p-6">
-          <div class="w-12 h-12 rounded-xl bg-rose-50 flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253"/>
-            </svg>
-          </div>
-          <h3 class="font-bold text-slate-800 mb-2">Normativa & Compliance UE</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Analisi e interpretazione della normativa comunitaria in materia agricola (Reg. 1305/2013, 2021/2115, PAC 2023-2027) e adeguamento delle procedure.</p>
-        </div>
-
-        <!-- Card 6 -->
-        <div class="card p-6">
-          <div class="w-12 h-12 rounded-xl bg-cyan-50 flex items-center justify-center mb-4">
-            <svg class="w-6 h-6 text-cyan-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 1-6.23-.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0 1 12 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"/>
-            </svg>
-          </div>
-          <h3 class="font-bold text-slate-800 mb-2">Digitalizzazione Processi PA</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Consulenza sull'implementazione e ottimizzazione dei sistemi informativi per la gestione dei fondi europei (SIARC, SIN, portali AGEA).</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════ CONTACT ═════════════════════════════ -->
-  <section id="contact" class="py-20 bg-slate-50">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="grid md:grid-cols-2 gap-16 items-start">
-
-        <!-- Left: info -->
         <div>
-          <p class="text-xs font-semibold text-blue-600 uppercase tracking-[.15em] mb-3">Contatti</p>
-          <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-5">Parliamo del tuo progetto</h2>
-          <p class="text-slate-600 leading-relaxed mb-8">
-            Che tu sia un ente pubblico, un'associazione di categoria o un'impresa agricola alla ricerca di
-            supporto nella gestione dei fondi europei, sono qui per aiutarti. Scrivimi o chiamami per
-            discutere le tue esigenze e trovare la soluzione più adatta.
+          <span class="section-label mb-4">Profilo</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-snug mb-6">
+            Ingegnere del software<br/>con radici nella PA.
+          </h2>
+          <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-5">
+            Ho costruito la mia carriera all'intersezione tra sviluppo software e processi amministrativi complessi. Non mi occupo genericamente di tecnologia: porto competenze precise su sistemi informativi regionali, interoperabilità e workflow istruttori per la gestione dei fondi europei.
           </p>
-
-          <div class="space-y-4">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>
+          <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-5">
+            Il valore che offro è un profilo ibrido raro: solide competenze tecniche full-stack su stack open source moderno, conoscenza diretta dei procedimenti amministrativi e capacità di trasformare processi complessi in soluzioni digitali concrete, scalabili e manutenibili.
+          </p>
+          <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed italic border-l-2 border-teal-500/40 pl-4 mb-8">
+            Il nome <strong class="not-italic font-semibold text-slate-700 dark:text-slate-300">R2H Solutions</strong> non è scelto a caso: racchiude le iniziali di tre persone che danno senso a tutto ciò che costruisco.
+          </p>
+          <div class="space-y-3">
+            <span class="skill-group-header text-slate-400">Formazione</span>
+            <div class="flex gap-3 items-start">
+              <div class="w-8 h-8 rounded-lg bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-teal-600 dark:text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 0 0-.491 6.347A48.627 48.627 0 0 1 12 20.904a48.627 48.627 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.57 50.57 0 0 0-2.658-.813A59.905 59.905 0 0 1 12 3.493a59.902 59.902 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"/></svg>
               </div>
               <div>
-                <p class="text-xs text-slate-500 font-medium uppercase tracking-wide">Email</p>
-                <a href="mailto:ing.aniellodandrea@r2hsolutions.it" class="text-slate-800 font-semibold hover:text-blue-600 transition-colors">ing.aniellodandrea@r2hsolutions.it</a>
+                <p class="text-sm font-semibold text-slate-800 dark:text-slate-100">Laurea Magistrale in Ingegneria Informatica e dell'Automazione</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Università Telematica e-Campus · 2022</p>
               </div>
             </div>
-
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253"/></svg>
+            <div class="flex gap-3 items-start">
+              <div class="w-8 h-8 rounded-lg bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-teal-600 dark:text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 0 0-.491 6.347A48.627 48.627 0 0 1 12 20.904a48.627 48.627 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.57 50.57 0 0 0-2.658-.813A59.905 59.905 0 0 1 12 3.493a59.902 59.902 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"/></svg>
               </div>
               <div>
-                <p class="text-xs text-slate-500 font-medium uppercase tracking-wide">Sito web</p>
-                <span class="text-slate-800 font-semibold">r2hsolutions.it</span>
+                <p class="text-sm font-semibold text-slate-800 dark:text-slate-100">Laurea in Informatica</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Università degli Studi di Napoli Federico II</p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Right: form -->
-        <div class="card p-8">
-          <h3 class="font-bold text-slate-800 mb-6 text-lg">Invia un messaggio</h3>
-          <form action="mailto:ing.aniellodandrea@r2hsolutions.it" method="post" enctype="text/plain" class="space-y-5">
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <label for="nome" class="block text-sm font-medium text-slate-700 mb-1.5">Nome</label>
-                <input id="nome" name="nome" type="text" placeholder="Mario" required
-                  class="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-              </div>
-              <div>
-                <label for="cognome" class="block text-sm font-medium text-slate-700 mb-1.5">Cognome</label>
-                <input id="cognome" name="cognome" type="text" placeholder="Rossi" required
-                  class="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-              </div>
+        <div class="grid gap-4">
+          <div class="card p-6 reveal flex gap-4 items-start">
+            <div class="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-teal-600 dark:text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
             </div>
-
             <div>
-              <label for="email" class="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
-              <input id="email" name="email" type="email" placeholder="mario.rossi@esempio.it" required
-                class="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+              <h4 class="font-semibold text-slate-800 dark:text-slate-100 mb-1">Tecnico prima di tutto</h4>
+              <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Full-stack su stack open source moderno: Node.js, TypeScript, React, PostgreSQL. Non solo consulenza — sviluppo reale, deployment reale.</p>
             </div>
-
+          </div>
+          <div class="card p-6 reveal flex gap-4 items-start">
+            <div class="w-10 h-10 rounded-xl bg-sky-50 dark:bg-sky-900/20 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-sky-600 dark:text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z"/></svg>
+            </div>
             <div>
-              <label for="oggetto" class="block text-sm font-medium text-slate-700 mb-1.5">Oggetto</label>
-              <input id="oggetto" name="oggetto" type="text" placeholder="Consulenza PSR / Audit fondi europei…"
-                class="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+              <h4 class="font-semibold text-slate-800 dark:text-slate-100 mb-1">Conoscenza della PA dall'interno</h4>
+              <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Più di 10 anni su sistemi reali per enti regionali. Conosco i processi amministrativi prima di codificarli.</p>
             </div>
-
+          </div>
+          <div class="card p-6 reveal flex gap-4 items-start">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z"/></svg>
+            </div>
             <div>
-              <label for="messaggio" class="block text-sm font-medium text-slate-700 mb-1.5">Messaggio</label>
-              <textarea id="messaggio" name="messaggio" rows="4" placeholder="Descrivi brevemente il tuo progetto o la tua esigenza…" required
-                class="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"></textarea>
+              <h4 class="font-semibold text-slate-800 dark:text-slate-100 mb-1">AI applicata, non teorica</h4>
+              <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Soluzioni RAG e document intelligence per processi istruttori reali, con tracciabilità, Explainable AI e privacy by design.</p>
             </div>
-
-            <button type="submit"
-              class="w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center justify-center gap-2">
-              Invia messaggio
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"/></svg>
-            </button>
-          </form>
+          </div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ════════════════════════════════ FOOTER ══════════════════════════════ -->
-  <footer class="bg-slate-900 text-slate-400 py-10">
-    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-      <div class="flex items-center gap-2">
-        <span class="text-xl font-extrabold tracking-tight gradient-text">R2H</span>
-        <span class="text-slate-500 font-semibold text-sm">Solutions</span>
+  <!-- ═══════════════════════ CONTACT ═══════════════════════ -->
+  <section id="contact" class="py-24 bg-slate-900 dark:bg-slate-950 relative overflow-hidden">
+    <div class="absolute inset-0 dot-grid opacity-25 pointer-events-none"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[40rem] h-64 bg-teal-500/10 blur-[80px] rounded-full pointer-events-none"></div>
+
+    <div class="relative max-w-2xl mx-auto px-6 text-center">
+      <span class="text-teal-400 text-xs font-bold uppercase tracking-[.18em] block mb-4">Contatti</span>
+      <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-5 leading-tight">
+        Hai un progetto<br/>in mente?
+      </h2>
+      <p class="text-slate-400 leading-relaxed mb-10 max-w-lg mx-auto">
+        Che si tratti di un sistema informativo per la PA, di un'integrazione con fondi europei o di una soluzione AI per i tuoi processi documentali — scrivimi e ne parliamo.
+      </p>
+
+      <a href="mailto:ing.aniellodandrea@r2hsolutions.it"
+         class="inline-flex items-center gap-3 px-8 py-4 bg-teal-500 hover:bg-teal-400 text-slate-900 font-bold text-lg rounded-2xl shadow-xl shadow-teal-900/40 transition-all hover:-translate-y-1 mb-6">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>
+        Apri il client email
+      </a>
+
+      <p class="text-slate-500 text-sm">oppure scrivi direttamente a</p>
+      <a href="mailto:ing.aniellodandrea@r2hsolutions.it"
+         class="inline-block mt-2 text-teal-400 hover:text-teal-300 font-mono text-sm transition-colors underline underline-offset-4">
+        ing.aniellodandrea@r2hsolutions.it
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+  <footer class="bg-slate-950 border-t border-slate-800/60 py-10">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-5">
+      <div class="flex flex-col gap-0.5">
+        <div class="flex items-center gap-1.5">
+          <span class="font-mono text-xs text-slate-600">&lt;</span>
+          <span class="text-base font-extrabold tracking-tight text-white">Aniello <span class="accent-text">D'Andrea</span></span>
+          <span class="font-mono text-xs text-slate-600">/&gt;</span>
+        </div>
+        <span class="text-[9px] font-bold tracking-[.2em] uppercase text-slate-600 pl-4">R2H Solutions</span>
       </div>
-      <p class="text-sm text-center">© 2026 R2H Solutions – Aniello D'Andrea. Tutti i diritti riservati.</p>
-      <a href="mailto:ing.aniellodandrea@r2hsolutions.it" class="text-sm hover:text-white transition-colors">ing.aniellodandrea@r2hsolutions.it</a>
+      <div class="text-center">
+        <p class="text-xs text-slate-500">Software Developer · PA &amp; Fondi Europei · Open Source · AI</p>
+        <p class="text-xs text-slate-600 mt-1">© 2026 R2H Solutions · Aniello D'Andrea · Tutti i diritti riservati.</p>
+        <p class="text-xs text-slate-700 mt-0.5">P.IVA 04721150615</p>
+      </div>
+      <a href="mailto:ing.aniellodandrea@r2hsolutions.it"
+         class="text-xs text-slate-400 hover:text-teal-400 transition-colors font-mono">
+        ing.aniellodandrea@r2hsolutions.it
+      </a>
     </div>
   </footer>
 
-  <!-- ════════════════════════════════ JS ══════════════════════════════════ -->
+  <!-- ═══════════════════════ JS ═══════════════════════ -->
   <script>
-    // Mobile menu toggle
-    const btn  = document.getElementById('menu-btn');
-    const menu = document.getElementById('mobile-menu');
-    btn.addEventListener('click', () => menu.classList.toggle('open'));
+    // Dark mode toggle
+    document.getElementById('dark-toggle').addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
 
-    // Close mobile menu on link click
-    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+    // Mobile menu
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    mobileMenu.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => mobileMenu.classList.remove('open'))
+    );
 
     // Navbar shadow on scroll
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 10);
-    });
+      navbar.classList.toggle('scrolled', window.scrollY > 8);
+    }, { passive: true });
 
-    // Smooth appear on sections (IntersectionObserver)
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
+    // Reveal on scroll
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
         if (e.isIntersecting) {
-          e.target.style.opacity = '1';
-          e.target.style.transform = 'translateY(0)';
+          e.target.style.animationDelay = (i % 4) * 70 + 'ms';
+          e.target.classList.add('visible');
+          revealObs.unobserve(e.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.08, rootMargin: '0px 0px -36px 0px' });
 
-    document.querySelectorAll('.card').forEach(card => {
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(16px)';
-      card.style.transition = 'opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease, transform 0.2s ease';
-      observer.observe(card);
-    });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    // Active nav highlight
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const navObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navLinks.forEach(l => l.style.color = '');
+          const link = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+          if (link) link.style.color = '#0d9488';
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(s => navObs.observe(s));
   </script>
 
 </body>
